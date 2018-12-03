@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+
+    <!-- 定义个缺省的控制适配器 -->
+    <bean
+            class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+
+    <context:annotation-config />
+
+    <!-- 自动扫描注解的bean -->
+    <context:component-scan base-package="com.xzx.dao" />
+
+
+
+    <!-- 定义数据源Bean-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <!-- 指定连接数据库的驱动 -->
+        <property name="driverClassName" value="org.sqlite.JDBC" />
+        <!-- 指定连接数据库的URL -->
+     <property name="url" value="jdbc:sqlite::resource:Lab.db" />
+       <!-- <property name="url" value="jdbc:sqlite::classpath:resource:Lab.db" />-->
+        <!--第二种（不指定数据库test.db在电脑中的位置，这是位置就是所在Java项目根目录下）-->
+        <!--<property name="url" value="jdbc:sqlite:sql/Lab.db" />-->
+
+      <!-- <property name="url" value="jdbc:sqlite:/Users/mac/IdeaProjects/SpringMVC/sql/Lab.db" />-->
+
+        <property name="initialSize" value="2" />
+        <property name="maxIdle" value="5" />
+        <property name="poolPreparedStatements" value="true" />
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 配置对应的dao 接口实现类bean
+         其中ID=“hzDao” ，这个需要和对应的dao接口实现类相对应
+      -->
+
+
+
+
+</beans>

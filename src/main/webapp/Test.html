@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/angular.js/1.6.3/angular.min.js"></script>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+</head>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+{{list}}
+
+</div>
+<body>
+
+</body>
+</html>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http) {
+        $http({method:'get',
+            url:"${pageContext.request.contextPath}"+"/Doctor/1
+            /*   params:{
+                   'Did' : 1
+               }*/
+        }).then(function (response) {
+            $scope.list = response.data;
+        });
+    })
+</script>
